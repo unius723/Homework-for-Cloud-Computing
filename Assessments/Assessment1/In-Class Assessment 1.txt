@@ -1,0 +1,84 @@
+(a)
+1. IaaS:
+Provides virtualized computing resources such as virtual machines, storage, and networks. Developers install and manage the operating system and software themselves.
+
+Examples:
+A developer creates a virtual machine on AWS EC2 or Azure VM, installs Linux/Windows, sets up MySQL, and deploys their web application.
+Key point: User manages OS, middleware, runtime, and apps.
+
+2. PaaS:
+Provides a ready-to-use platform (OS, middleware, runtime, database) where developers just deploy their code.
+
+Examples:
+A Python Flask app is deployed directly to Heroku, Google App Engine, or AWS Elastic Beanstalk, and the platform automatically handles scaling and runtime configuration.
+
+3. SaaS:
+Provides complete software applications directly accessible via a browser or client. No need to handle installation or deployment.
+
+Examples:
+Teams use GitHub, GitLab, Jira, or Slack to manage source code, collaboration, and tasks without hosting their own servers.
+
+
+(b)
+1. Docker is an open-source platform for containerization. It packages an application with its dependencies into a container, ensuring it runs consistently across environments.
+
+2. I used to use Hbase to complete some task to set up a database, but to run HBase on my machine I need to install Java, Hadoop, and HBase manually, then configure files like hbase-site.xml. This setup is time-consuming and error-prone. Then, I use Docker so I can pull and run a prebuilt HBase Docker image that already contains all dependencies and configurations with no manual setup required.
+
+3.
+i.Simplifies Development
+-Without Docker: you had to install Java, Hadoop, and HBase manually and tweak config files like hbase-site.xml. That’s slow and error-prone.
+-With Docker: you simply run a prebuilt HBase image. Every developer on your team gets the same working environment instantly, which avoids “it works on my machine” issues.
+
+ii.Accelerates Deployment
+-Docker images can be shipped to any environment (local, testing, or production) with no extra configuration.
+-Instead of setting up HBase from scratch each time, deployment becomes a single command.
+
+iii.Consistency Across Environments
+-The HBase container behaves the same way on Windows, macOS, or Linux.
+-This guarantees that the software will work the same way during homework development, classroom testing, or even in production-like setups.
+
+
+(c)
+Command:
+docker run -it --rm \              
+  --name n8n \                        
+  -p 5678:5678 \ 
+  -e N8N_SECURE_COOKIE=false \
+  n8nio/n8n
+
+Explanation:
+1. docker run
+   This tells Docker to start a new container from an image.
+
+2. -it
+   Combines two flags:
+      -i → interactive: keeps STDIN open so you can interact with the container.
+      -t → TTY: allocates a terminal so you can see logs or interact in a readable way.
+           Together, they let you see output and interact with the container in the terminal.
+
+3. --rm
+   Automatically removes the container when it stops.
+   Useful for temporary experiments — you don’t have leftover stopped containers cluttering your system.
+
+4. --name n8n
+   Assigns a custom name to your container (n8n).
+   This makes it easier to reference the container later, e.g., to stop it with docker stop n8n.
+
+5. -p 5678:5678
+   Format: -p Host Port: Container Port.
+   Maps port 5678 on your Mac to port 5678 inside the container.
+   This allows you to access the n8n web interface in your browser at http://localhost:5678.
+   Syntax: host_port:container_port.
+
+6. -e N8N_SECURE_COOKIE=false
+   E: Environment variable
+   Sets an environment variable inside the container.
+   N8N_SECURE_COOKIE=false disables the secure cookie feature.
+       - Normally, n8n requires HTTPS for cookies to be secure.
+       - Setting this to false allows you to run n8n over HTTP locally without HTTPS.
+
+7. n8nio/n8n
+   This is the official Docker image for n8n, hosted on Docker Hub.
+   Docker will pull this image if it isn’t already on your machine, then start a container from it.
+
+
