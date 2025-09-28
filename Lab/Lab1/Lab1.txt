@@ -1,0 +1,67 @@
+Lab 1:
+1. Check if your processor supports Intel/AMD virtualization technology. Enable Intel virtualization technology in BIOS if possible.
+
+-- Yes, my Mac is based on apple silicon uses the Apple virtualization framework and also supports virtual machines.
+
+
+2. The cloud is almost everywhere in our lives now. What do you think are the fundamental reasons behind its success? Name three pros and three cons of cloud.
+
+-- Fundamental reasons:
+   I. Reliability of the fundamental facilities
+   II. On-demand access to computing resources
+   III. Cost efficiency through pay-as-you-go pricing
+
+-- Pros:
+   I. Powerful computing abilities
+   II. Reliable data storage center
+   III. Lower upfront hardware and maintenance cost
+
+-- Cons:
+   I. Dependence on internet connectivity
+   II. Security and privacy concerns
+   III. Vendor lock-in and limited control over infrastructure
+
+
+3. What is the primary function of a hypervisor in virtualization?
+-- A hypervisor is a software layer that allows multiple virtual machines (VMs) to run on a single physical machine. Each VM operates independently with its own operating system and applications, while the hypervisor allocates the underlying physical resources such as CPU, memory, and storage to each VM as needed.
+
+
+4. What is a virtual machine (VM)?
+-- A virtual machine (VM) is a software-based emulation of a physical computer. It operates like a physical computer with its own CPU, memory, storage, and network interface, but it exists only as code within a physical host computer. VMs are often referred to as virtual computers or software-defined computers.
+
+
+5. What are the benefits of using virtual machines?
+-- I. Resource efficiency
+   II. Isolation for testing and security
+   III. Easier backup, recovery, and migration
+   IV. Portability across systems
+
+
+6. List five use cases of virtual machines.
+-- I. Run multiple operating systems on one machine
+   II. Run old or incompatible software
+   III. Develop software for other platforms
+   IV. Handle potential malware safely
+
+
+7. In virtualization, what is the guest operating system? -- B
+a) The main operating system running on the physical machine
+b) The operating system installed on a virtual machine
+c) The operating system running on a remote server
+d) The operating system running on a mobile device
+
+8. What does virtual machine isolation mean? --C
+a) Virtual machines can communicate directly with the physical hardware.
+b) Virtual machines share the same resources and cannot be isolated.
+c) virtual machines run independently and are isolated from each other and the host system.
+d) Virtual machines can only be accessed locally.
+
+9. What is the benefit of virtual machine portability? --C
+a) It allows virtual machines to communicate with each other easily.
+b) It ensures faster boot times for virtual machines.
+c) It allows virtual machines to be moved between different physical machines with compatible hypervisors.
+d) It reduces the need for hardware virtualization.
+
+10. What is the purpose of cloning a virtual machine?
+--Cloning a virtual machine creates an exact copy of the original VM (including its OS, applications, and configurations), which saves time in deployment, enables quick recovery, and allows testing in identical environments.
+ 
