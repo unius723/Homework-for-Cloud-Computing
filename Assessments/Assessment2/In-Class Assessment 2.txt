@@ -1,0 +1,58 @@
+1. Orchestration tools, such as Kubernetes, play a key role in the server infrastructure for the modern applications.
+
+(a) Explain how these tools help manage and scale application servers.
+----These tools manage and scale application servers by automatically scheduling workloads, distributing them across nodes, ensuring high availability, and scaling instances up or down depending on demand.
+
+(b) Describe how orchestration tools facilitate automated deployment, scaling, and management of application servers.
+---- Automated deployment through declarative configurations (YAML/Helm).
+---- Scaling via manual commands or Horizontal Pod Autoscalers (HPA).
+---- Management through health checks, self-healing, and rolling updates.
+
+
+2. Explain the difference between a Pod, Deployment, and Service.
+---- Pod: The smallest deployable unit in Kubernetes, containing one or more tightly coupled containers.
+---- Deployment: Manages a set of Pods, enabling scaling, rolling updates, and rollbacks.
+---- Service: Provides stable networking and load balancing to Pods, ensuring consistent access even if Pods are recreated.
+
+
+3. What is a Namespace in Kubernetes? Please list one example.
+---- A Namespace is a logical partition within a cluster used to organize and isolate resources.
+---- Example: kube-system
+
+
+
+4. Explain the role of the Kubelet. How do you check the nodes in a Kubernetes cluster? (kubectl command expected)
+---- Kubelet: Runs on each node, ensuring that containers in Pods are running as defined, and reports node and pod status to the API server.
+---- Check command: kubectl get nodes
+
+
+5. What is the difference between ClusterIP, NodePort, and LoadBalancer services?
+---- ClusterIP: Default type, accessible only within the cluster.
+---- NodePort: Exposes the service on each node’s IP at a static port (30000–32767).
+---- LoadBalancer: Integrates with cloud providers to provision an external load balancer with a public IP.
+
+
+6. How do you scale a Deployment to 5 replicas using kubectl?
+---- kubectl scale deployment <deployment-name> --replicas=5
+
+7. How would you update the image of a Deployment without downtime?
+---- Use a rolling update:
+     kubectl set image deployment/<deployment-name> <container-name>=<new-image>
+
+
+8. How do you expose a Deployment to external traffic?
+---- With a Service:
+     kubectl expose deployment <deployment-name> --type=NodePort --port=80
+---- On cloud environments, use --type=LoadBalancer
+
+9. How does Kubernetes scheduling decide which node a Pod runs on?
+----The scheduler selects a node based on:
+    a. Available resources (CPU, memory).
+    b. Node constraints (nodeSelector, taints/tolerations).
+    c. Load balancing policies to evenly spread Pods.
+
+10. What is the role of Ingress and how does it differ from a Service?
+---- Ingress: Provides HTTP/HTTPS routing, domain-based or path-based traffic control, and TLS termination.
+---- Difference:
+     a. A Service exposes Pods at the network level (L4).
+     b. An Ingress operates at the application layer (L7), allowing advanced routing to multiple Services behind one entry point.
