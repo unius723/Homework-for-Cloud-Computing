@@ -1,0 +1,42 @@
+1. What problem does serverless computing aim to solve compared to traditional microservice deployment on Kubernetes? Give one example where serverless is clearly better, and one where it may not be.
+---- Traditional microservice deployments on Kubernetes require developers to manage infrastructure, including provisioning nodes, configuring networking, handling scaling, patching, and monitoring the cluster. This adds operational complexity and consumes significant engineering time. Serverless computing abstracts away these concerns: developers only need to write the business logic, while the cloud provider automatically handles infrastructure management, scaling, and resource allocation.
+
+---- Event-driven workloads with unpredictable traffic are ideal for serverless. For example, a photo-processing API that resizes or compresses images whenever a user uploads a file.
+
+---- Serverless is not ideal for long-running, resource-intensive workloads. For instance, video transcoding or large-scale scientific simulations may require hours of continuous processing and high CPU/GPU resources.
+
+
+2. What are the advantages of using a service mesh (like Istio) for managing microservices communication instead of relying only on Kubernetes networking?
+---- A service mesh such as Istio provides significant advantages over relying solely on Kubernetes networking for microservices communication. While Kubernetes handles basic networking, it does not offer fine-grained observability, security, or traffic management out of the box. Istio enhances the system by collecting metrics, traces, and logs for each service, enabling developers to monitor performance and detect issues in real time. It also provides automatic mutual TLS for secure communication between services, ensuring that all traffic is encrypted and authenticated without requiring changes to the application code. Furthermore, Istio centralizes traffic management features such as routing, retries, and circuit breaking, allowing developers to implement consistent policies across the entire microservice ecosystem without modifying individual services.
+
+
+3. Explain what a sidecar proxy (such as Envoy in Istio) does. Why is it needed in a service mesh?
+---- A sidecar proxy, such as Envoy in Istio, is deployed alongside each service pod and intercepts all incoming and outgoing traffic. It handles security, telemetry, and routing policies transparently, which allows features like observability, retries, and access control to be implemented consistently across services without embedding them in application code. The sidecar is essential because it offloads network-level responsibilities from the application, providing a uniform way to enforce policies and monitor traffic throughout the service mesh.
+
+
+4. What kind of traffic management features does Istio provide? Give two examples of how they can be useful in production systems.
+---- Istio provides advanced traffic management capabilities that are invaluable in production systems. It supports weighted routing, allowing gradual traffic shifts between different versions of a service, which is crucial for safely rolling out new features. It also provides retries and circuit breaking, ensuring reliability by handling transient failures and preventing cascading failures that could affect the whole system. These features enable operators to maintain stable services even under partial failures and to experiment with new versions of services without risking production downtime.
+
+
+5. Explain how Knative Serving enables autoscaling for an application. What triggers scaling up and scaling down?
+---- Knative Serving enables autoscaling by dynamically adjusting the number of pods in response to incoming request load. When request volume increases, Knative scales pods up to handle the load, and when there are no requests for a certain period, it scales pods down, even to zero, which helps save resources. This autoscaling mechanism is triggered by traffic demand, allowing applications to efficiently handle variable workloads without manual intervention.
+
+
+6. What is the role of Knative Eventing, and how does it support event-driven architectures?
+---- Knative Eventing plays a complementary role by supporting event-driven architectures. It decouples event producers from consumers, allowing asynchronous triggers of serverless functions or services. This approach enables highly reactive systems where events such as user actions, sensor data, or messages from other services can automatically invoke corresponding workloads, supporting scalable and flexible architectures.
+
+
+7. How does Knative leverage Kubernetes primitives to provide a serverless experience? Discuss which components of Kubernetes (e.g., Deployments, Services, Horizontal Pod Autoscaler) are abstracted away and how this abstraction benefits developers.
+---- Knative leverages Kubernetes primitives such as Deployments, Services, and Horizontal Pod Autoscalers but abstracts them away from developers. Deployments and ReplicaSets are managed internally to ensure pod availability, Services are automatically exposed to handle incoming traffic, and Knative’s autoscaling logic replaces the default HPA behavior. This abstraction allows developers to focus on writing application logic without worrying about low-level Kubernetes operations, resulting in a seamless serverless experience.
+
+
+8. In KServe, what is the main function of an InferenceService, and how does it simplify deploying ML models?
+---- In KServe, an InferenceService serves as the main abstraction for deploying machine learning models. It encapsulates the predictor, transformer, and autoscaling policies, allowing developers to declare the model specification and let KServe handle serving, scaling, routing, and monitoring. This simplifies the deployment process and reduces the operational burden of managing ML models in production.
+
+
+9. In a production ML workflow using KServe, describe how data moves from an incoming HTTP request to a model prediction response. Which layers (Knative, Istio, KServe, Kubernetes) handle which responsibilities, and where could latency bottlenecks occur?
+---- In a production ML workflow using KServe, incoming HTTP requests are first handled by the Istio ingress, which routes the requests and provides TLS security. Knative Serving manages the pod scaling and routes requests to the appropriate model version. The KServe InferenceService handles preprocessing, model prediction, and postprocessing, while Kubernetes manages pod lifecycle, scheduling, and networking. Latency bottlenecks can occur in network overhead caused by Istio, cold starts from Knative scaling to zero, and the computational cost of model inference.
+
+
+10. How can Istio’s traffic routing capabilities (e.g., weighted routing, retries, circuit breaking) be used to support canary deployments or A/B testing in Knative or KServe environments? Discuss the pros and cons compared to manual rollout strategies.
+---- Istio’s traffic routing capabilities, such as weighted routing, retries, and circuit breaking, can be used to implement canary deployments or A/B testing in Knative or KServe environments. By gradually shifting a small percentage of traffic to a new model or service version, developers can validate behavior and performance before fully rolling it out. Retries and circuit breakers ensure reliability during the rollout. Compared to manual rollout strategies, this approach provides finer control, reduces risk, and allows automated rollback in case of errors, though it adds complexity and requires knowledge of Istio configuration.
