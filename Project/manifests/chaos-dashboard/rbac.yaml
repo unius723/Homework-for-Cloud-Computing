@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  namespace: chaos-mesh
+  name: account-chaos-mesh-manager-ytznq
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cluster-role-chaos-mesh-manager-ytznq
+rules:
+- apiGroups: ["", "chaos-mesh.org"]
+  resources: ["*"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: cluster-rolebinding-chaos-mesh-manager-ytznq
+subjects:
+- kind: ServiceAccount
+  name: account-chaos-mesh-manager-ytznq
+  namespace: chaos-mesh
+roleRef:
+  kind: ClusterRole
+  name: cluster-role-chaos-mesh-manager-ytznq
+  apiGroup: rbac.authorization.k8s.io
