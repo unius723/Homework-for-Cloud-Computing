@@ -1,0 +1,20 @@
+kind: StressChaos
+apiVersion: chaos-mesh.org/v1alpha1
+metadata:
+  namespace: chaos-mesh
+  name: stress
+spec:
+  selector:
+    namespaces:
+      - chaos-mesh
+    labelSelectors:
+      app: test-nginx
+  mode: all
+  stressors:
+    memory:
+      workers: 2
+      size: 50%
+    cpu:
+      workers: 2
+      load: 80
+  duration: 5m
