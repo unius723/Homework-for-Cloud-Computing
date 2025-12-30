@@ -1,0 +1,18 @@
+kind: NetworkChaos
+apiVersion: chaos-mesh.org/v1alpha1
+metadata:
+  namespace: chaos-mesh
+  name: loss
+spec:
+  selector:
+    namespaces:
+      - chaos-mesh
+    labelSelectors:
+      app: test-nginx
+  mode: all
+  action: loss
+  duration: 30s
+  loss:
+    loss: '30'
+    correlation: '0.8'
+  direction: to
