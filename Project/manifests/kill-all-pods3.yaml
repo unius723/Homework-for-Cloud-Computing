@@ -1,0 +1,13 @@
+kind: PodChaos
+apiVersion: chaos-mesh.org/v1alpha1
+metadata:
+  namespace: chaos-mesh
+  name: kill-all-pods3
+spec:
+  selector:
+    namespaces:
+      - chaos-mesh
+    labelSelectors:
+      app: test-nginx
+  mode: all
+  action: pod-kill
